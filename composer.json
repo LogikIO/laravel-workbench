@@ -1,0 +1,27 @@
+{
+    "name": "speelpenning/laravel-workbench",
+    "description": "Helps you develop packages for Laravel 5.1.",
+    "keywords": ["laravel", "workbench", "packages"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gerben Speelpenning",
+            "email": "gerben@speelpenning.nl"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/config": "5.1.*",
+        "illuminate/console": "5.1.*",
+        "illuminate/filesystem": "5.1.*",
+        "illuminate/foundation": "5.1.*",
+        "illuminate/support": "5.1.*",
+        "illuminate/view": "5.1.*",
+        "symfony/finder": "2.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Speelpenning\\Workbench\\": "src/"
+        }
+    }
+}
