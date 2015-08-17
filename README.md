@@ -55,6 +55,9 @@ files should be created for you:
 - A README.md file
 - A .gitignore file
 
+As a last step before development, add the package service provider to the list of services providers in the 
+Laravel application configuration.
+
 ## Configuration
 
 The workbench works out of the box, but you may configure some options for your convenience. To avoid publishing the 

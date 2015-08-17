@@ -48,7 +48,7 @@ class LicenseFileGenerator {
             throw new LicenseNotSupported($license);
         }
 
-        $file = $path . DIRECTORY_SEPARATOR . 'LICENCE';
+        $file = $path . DIRECTORY_SEPARATOR . 'LICENSE';
 
         $license = $this->view->make(
             'workbench::licenses.' . strtolower(str_slug($license)),

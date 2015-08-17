@@ -11,9 +11,14 @@ class PackageGenerator {
      */
     protected $filesystem;
 
-
+    /**
+     * @var string
+     */
     protected $packagePath;
 
+    /**
+     * @var string
+     */
     protected $sourcePath;
 
     /**

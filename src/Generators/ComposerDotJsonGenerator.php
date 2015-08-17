@@ -61,25 +61,20 @@ class ComposerDotJsonGenerator {
      */
     protected function toJson($vendor, $package, $description, $license, $author_name, $author_email, $namespace)
     {
-        return json_encode(
-            [
-                'name' => $vendor . DIRECTORY_SEPARATOR . $package,
-                'description' => $description,
-                'license' => $license,
-                'authors' => [
-                    [
-                        'name' => $author_name,
-                        'email' => $author_email
-                    ]
-                ],
-                'autoload' => [
-                    'psr-4' => [
-                        $namespace . '\\' => 'src/'
-                    ]
-                ]
+        return json_encode([
+            'name' => $vendor . DIRECTORY_SEPARATOR . $package,
+            'description' => $description,
+            'license' => $license,
+            'authors' => [
+                ['name' => $author_name, 'email' => $author_email]
             ],
-            JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES
-        );
+            'autoload' => [
+                'psr-4' => [
+                    $namespace . '\\' => 'src/'
+                ]
+            ]
+        ],
+        JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
     }
 
 }
