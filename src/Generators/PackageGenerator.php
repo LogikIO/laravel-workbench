@@ -1,5 +1,6 @@
 <?php namespace Speelpenning\Workbench\Generators;
 
+use ErrorException;
 use Illuminate\Filesystem\Filesystem;
 use Speelpenning\Workbench\Exceptions\DirectoryNotCreated;
 use Speelpenning\Workbench\Exceptions\PackageExists;
@@ -46,6 +47,25 @@ class PackageGenerator {
     }
 
     /**
+     * Tries to make a directory.
+     *
+     * @param string $directory
+     * @return string
+     * @throws DirectoryNotCreated
+     */
+    protected function makeDirectory($directory)
+    {
+        try {
+            if ( ! $this->filesystem->makeDirectory($directory, 0755, true)) {
+                throw new DirectoryNotCreated($directory);
+            }
+        }
+        catch (ErrorException $e) {
+            throw new DirectoryNotCreated($directory);
+        }
+    }
+
+    /**
      * Creates the package directory and returns the path.
      *
      * @param string $path
@@ -62,9 +82,7 @@ class PackageGenerator {
             throw new PackageExists($vendor . '/' . $package);
         }
 
-        if ( ! $this->filesystem->makeDirectory($directory, 0755, true)) {
-            throw new DirectoryNotCreated($directory);
-        }
+        $this->makeDirectory($directory);
 
         $this->packagePath = $directory;
     }
@@ -78,9 +96,7 @@ class PackageGenerator {
     {
         $directory = $this->packagePath . DIRECTORY_SEPARATOR . 'src';
 
-        if ( ! $this->filesystem->makeDirectory($directory, 0755, true)) {
-            throw new DirectoryNotCreated($directory);
-        }
+        $this->makeDirectory($directory);
 
         $this->sourcePath = $directory;
     }
