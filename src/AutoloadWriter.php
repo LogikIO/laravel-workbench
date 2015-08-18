@@ -11,6 +11,11 @@ class AutoloadWriter {
     protected $filesystem;
 
     /**
+     * @var string
+     */
+    protected $file;
+
+    /**
      * AutoloadWriter constructor.
      *
      * @param Filesystem $filesystem
@@ -18,27 +23,82 @@ class AutoloadWriter {
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
+        $this->file = base_path('composer.json');
     }
 
     /**
+     * Adds a namespace with source path to the autoload section.
+     *
      * @param string $sourcePath
      * @param string $namespace
-     * @throws FileNotFoundException
      */
     public function writeAutoloadPsr4($sourcePath, $namespace)
     {
-        $file = base_path('composer.json');
-        $relativeSourcePath = str_replace(base_path() . DIRECTORY_SEPARATOR, '', $sourcePath) . '/';
+        $array = $this->getComposerDotJsonContents();
 
-        $json = $this->filesystem->get($file);
+        $updated = array_add(
+            $array,
+            'autoload.psr-4.' . $namespace . '\\',
+            $this->createRelativeSourcePath($sourcePath)
+        );
 
-        $array = json_decode($json, true);
+        $this->putComposerDotJsonContents($updated);
+    }
 
-        $updated = array_add($array, 'autoload.psr-4.' . $namespace . '\\', $relativeSourcePath);
+    /**
+     * Removes a namespace from the autoload section.
+     *
+     * @param string $namespace
+     */
+    public function removeAutoloadPsr4($namespace)
+    {
+        $array = $this->getComposerDotJsonContents();
 
-        $json = json_encode($updated, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+        array_forget(
+            $array,
+            'autoload.psr-4.' . $namespace . '\\'
+        );
 
-        $this->filesystem->put($file, $json);
+        $this->putComposerDotJsonContents($array);
+    }
+
+    /**
+     * Returns an associative array with the composer.json contents
+     *
+     * @return array
+     * @throws FileNotFoundException
+     */
+    protected function getComposerDotJsonContents()
+    {
+        return json_decode(
+            $this->filesystem->get($this->file),
+            true
+        );
+    }
+
+    /**
+     * Writes the new composer.json file.
+     *
+     * @param array $contents
+     * @return int
+     */
+    protected function putComposerDotJsonContents(array $contents)
+    {
+        return $this->filesystem->put(
+            $this->file,
+            json_encode($contents, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)
+        );
+    }
+
+    /**
+     * Creates the relative source path for autoloading.
+     *
+     * @param string $sourcePath
+     * @return string
+     */
+    protected function createRelativeSourcePath($sourcePath)
+    {
+        return str_replace(base_path() . DIRECTORY_SEPARATOR, '', $sourcePath) . '/';
     }
 
 }
