@@ -1,14 +1,12 @@
-<?php
-
-namespace spec\Speelpenning\Workbench\Generators;
+<?php namespace spec\Speelpenning\Workbench\Generators;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Speelpenning\Workbench\Generators\NamespaceGenerator;
 use Speelpenning\Workbench\Package;
 
-class NamespaceGeneratorSpec extends ObjectBehavior
-{
+class NamespaceGeneratorSpec extends ObjectBehavior {
+
     function it_is_initializable()
     {
         $this->shouldHaveType(NamespaceGenerator::class);

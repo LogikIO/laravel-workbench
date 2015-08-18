@@ -48,4 +48,14 @@ class PackageValidator {
         }
     }
 
+    /**
+     * Returns the validation rules.
+     *
+     * @return array
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
 }
