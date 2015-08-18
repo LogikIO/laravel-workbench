@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Speelpenning\Workbench
+        psr4_prefix: Speelpenning\Workbench
+        src_path: src

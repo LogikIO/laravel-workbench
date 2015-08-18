@@ -52,32 +52,4 @@ class Package {
         return get_object_vars($this);
     }
 
-    /**
-     * Proposes the default namespace.
-     *
-     * @return string
-     */
-    public function proposeNamespace()
-    {
-        return $this->unslugAndCapitalize($this->vendor) . '\\' . $this->unslugAndCapitalize($this->package);
-    }
-
-    /**
-     * Unslugs the vendor and package name.
-     *
-     * @param string $string
-     * @return string
-     */
-    protected function unslugAndCapitalize($string)
-    {
-        // Turn all dashes into spaces to create words.
-        $string = str_replace('-', ' ', $string);
-
-        // Capitalize all words.
-        $string = ucwords($string);
-
-        // Remove all spaces.
-        return str_replace(' ', '', $string);
-    }
-
 }

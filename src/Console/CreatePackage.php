@@ -14,6 +14,7 @@ use Speelpenning\Workbench\Generators\ComposerDotJsonGenerator;
 use Speelpenning\Workbench\Generators\GitIgnoreGenerator;
 use Speelpenning\Workbench\Generators\LaravelServiceProviderGenerator;
 use Speelpenning\Workbench\Generators\LicenseFileGenerator;
+use Speelpenning\Workbench\Generators\NamespaceGenerator;
 use Speelpenning\Workbench\Generators\PackageGenerator;
 use Speelpenning\Workbench\Generators\ReadmeFileGenerator;
 use Speelpenning\Workbench\Package;
@@ -80,8 +81,15 @@ class CreatePackage extends Command {
      */
     protected $gitIgnoreGenerator;
 
-
+    /**
+     * @var AutoloadWriter
+     */
     protected $autoloadWriter;
+
+    /**
+     * @var NamespaceGenerator
+     */
+    protected $namespaceGenerator;
 
     /**
      * Indicates if preconfigured defaults should be skipped.
@@ -103,12 +111,14 @@ class CreatePackage extends Command {
      * @param ReadmeFileGenerator $readmeFileGenerator
      * @param GitIgnoreGenerator $gitIgnoreGenerator
      * @param AutoloadWriter $autoloadWriter
+     * @param NamespaceGenerator $namespaceGenerator
      */
     public function __construct(Repository $config, Package $package, PackageValidator $validator,
                                 PackageGenerator $packageGenerator, ComposerDotJsonGenerator $composerDotJsonGenerator,
                                 LaravelServiceProviderGenerator $serviceProviderGenerator,
                                 LicenseFileGenerator $licenseFileGenerator, ReadmeFileGenerator $readmeFileGenerator,
-                                GitIgnoreGenerator $gitIgnoreGenerator, AutoloadWriter $autoloadWriter)
+                                GitIgnoreGenerator $gitIgnoreGenerator, AutoloadWriter $autoloadWriter,
+                                NamespaceGenerator $namespaceGenerator)
     {
         parent::__construct();
 
@@ -123,6 +133,7 @@ class CreatePackage extends Command {
         $this->readmeFileGenerator = $readmeFileGenerator;
         $this->gitIgnoreGenerator = $gitIgnoreGenerator;
         $this->autoloadWriter = $autoloadWriter;
+        $this->namespaceGenerator = $namespaceGenerator;
 
         $this->setPackageDefaults();
         $this->skipDefaults = $this->config->get('workbench.skip_defaults');
@@ -172,7 +183,7 @@ class CreatePackage extends Command {
     {
         $this->package->vendor = $this->ask('Vendor name', $this->package->vendor);
         $this->package->package = $this->ask('Package name', $this->package->package);
-        $this->package->namespace = rtrim(parent::ask('Namespace', $this->package->proposeNamespace()), '\\');
+        $this->package->namespace = rtrim(parent::ask('Namespace', $this->namespaceGenerator->generate($this->package), '\\'));
         $this->package->description = parent::ask('Describe your package', $this->package->description);
         $this->package->authorName = $this->ask('Author name', $this->package->author_name);
         $this->package->authorEmail = $this->ask('Author e-mail address', $this->package->author_email);
