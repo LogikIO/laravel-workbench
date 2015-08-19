@@ -1,5 +1,11 @@
 # Workbench for Laravel 5.1
 
+[![Build Status](https://travis-ci.org/Speelpenning-nl/laravel-workbench.svg)](https://travis-ci.org/Speelpenning-nl/laravel-workbench)
+[![codecov.io](http://codecov.io/github/Speelpenning-nl/laravel-workbench/coverage.svg?branch=master)](http://codecov.io/github/Speelpenning-nl/laravel-workbench?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/speelpenning/laravel-workbench/version)](https://packagist.org/packages/speelpenning/laravel-workbench)
+[![Latest Unstable Version](https://poser.pugx.org/speelpenning/laravel-workbench/v/unstable)](//packagist.org/packages/speelpenning/laravel-workbench)
+[![License](https://poser.pugx.org/speelpenning/laravel-workbench/license)](https://packagist.org/packages/speelpenning/laravel-workbench)
+
 This package helps you developing packages using the Laravel framework. It handles the following tasks for you:
 
 - Set up a package directory structure in the workbench directory
