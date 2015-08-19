@@ -19,9 +19,18 @@
         "illuminate/view": "5.1.*",
         "symfony/finder": "2.7.*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "laravel/laravel": "5.1.*"
+    },
     "autoload": {
         "psr-4": {
             "Speelpenning\\Workbench\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
     }
 }
