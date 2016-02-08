@@ -43,7 +43,7 @@ class LicenseFileGeneratorTest extends TestCase {
     public function testInvalidPathThrowsAnErrorException()
     {
         $this->setExpectedException(ErrorException::class);
-        app(LicenseFileGenerator::class)->generate('\\', 'MIT', 'Acme', 'Testing', 'Testing package', 'John Doe', 'john.doe@example.com');
+        app(LicenseFileGenerator::class)->generate('*', 'MIT', 'Acme', 'Testing', 'Testing package', 'John Doe', 'john.doe@example.com');
     }
 
     public function testNotSupportedLicenseThrowLicenseNotSupported()
